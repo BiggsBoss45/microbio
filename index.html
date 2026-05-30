@@ -305,7 +305,7 @@ INVESTIGATION MENU
 
     <h2>INVESTIGATION TERMINAL</h2>
 
-    <button class="menuBtn">
+    <button class="menuBtn" onclick="openPage('audioLogs')">
         AUDIO LOGS
     </button>
 
@@ -313,8 +313,70 @@ INVESTIGATION MENU
         DATABASE
     </button>
 
+    <br>
+
+    <button class="menuBtn" onclick="backToMenu()">
+        MAIN MENU
+    </button>
+
 </div>
 
+<div id="audioLogs" class="page">
+
+    <h2>RECOVERED AUDIO LOGS</h2>
+
+    <button class="menuBtn"
+        onclick="playLog(
+        'audio/log1.mp3',
+        'LOG 01 - Lilly Porter'
+        )">
+        LOG 01 - Lilly Porter
+    </button>
+
+    <button class="menuBtn"
+        onclick="playLog(
+        'audio/log2.mp3',
+        'LOG 02 - Francisco Salazar'
+        )">
+        LOG 02 - Francisco Salazar
+    </button>
+
+    <button class="menuBtn"
+        onclick="playLog(
+        'audio/log3.mp3',
+        'LOG 03 - Brenda St. John'
+        )">
+        LOG 03 - Brenda St. John
+    </button>
+
+    <button class="menuBtn"
+        onclick="playLog(
+        'audio/log4.mp3',
+        'LOG 04 - Allen & Donna Gilsh'
+        )">
+        LOG 04 - Allen & Donna Gilsh
+    </button>
+
+    <button class="menuBtn"
+        onclick="playLog(
+        'audio/log5.mp3',
+        'SECURITY FEED'
+        )">
+        SECURITY FEED
+    </button>
+
+    <br><br>
+
+    <div id="currentLog"></div>
+
+    <br>
+
+    <button class="menuBtn"
+        onclick="openPage('investigationMenu')">
+        RETURN
+    </button>
+
+</div>
 <script>
 
 /* =========================
@@ -401,6 +463,22 @@ function verifyClassification(){
         "CLASSIFICATION ERROR";
 
     }
+}
+
+let currentAudio = null;
+
+function playLog(file, title){
+
+    if(currentAudio){
+        currentAudio.pause();
+    }
+
+    currentAudio = new Audio(file);
+
+    currentAudio.play();
+
+    document.getElementById("currentLog").innerHTML =
+        "NOW PLAYING:<br>" + title;
 }
 
 </script>
