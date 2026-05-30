@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GENESIS BIOSYSTEMS</title>
+
+<style>
+body{
+    margin:0;
+    background:black;
+    color:#00ffcc;
+    font-family:monospace;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+
+/* =========================
+   BOOT SCREEN
+========================= */
+
+#boot{
+    position:fixed;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    background:black;
+}
+
+#enterBtn{
+    margin-top:20px;
+    padding:12px 24px;
+    background:black;
+    color:#00ffcc;
+    border:1px solid #00ffcc;
+    cursor:pointer;
+}
+
+#enterBtn:hover{
+    background:#00ffcc;
+    color:black;
+}
+
+/* =========================
+   MENU
+========================= */
+
+#menu{
+    display:none;
+    min-height:100vh;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    gap:20px;
+}
+
+.menuBtn{
+    width:280px;
+    padding:12px;
+    background:black;
+    color:#00ffcc;
+    border:1px solid #00ffcc;
+    cursor:pointer;
+    font-family:monospace;
+}
+
+.menuBtn:hover{
+    background:#00ffcc;
+    color:black;
+}
+
+/* =========================
+   PAGES
+========================= */
+
+.page{
+    display:none;
+    padding:30px;
+    max-width:1000px;
+    margin:auto;
+}
+
+.page h2{
+    text-align:center;
+}
+
+img{
+    width:300px;
+    max-width:100%;
+    border:1px solid #00ffcc;
+    margin:10px;
+}
+
+.imageContainer{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:20px;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+input,
+select{
+    background:black;
+    color:#00ffcc;
+    border:1px solid #00ffcc;
+    padding:8px;
+    width:280px;
+    font-family:monospace;
+}
+
+#classificationResult{
+    margin-top:20px;
+    font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<!-- =========================
+BOOT SCREEN
+========================= -->
+
+<div id="boot">
+    <h1>GENESIS BIOSYSTEMS</h1>
+    <p>Containment Network v4.0</p>
+    <p>Initializing system...</p>
+
+    <button id="enterBtn">
+        PRESS ENTER
+    </button>
+</div>
+
+<!-- =========================
+MAIN MENU
+========================= -->
+
+<div id="menu">
+
+    <h2>MAIN MENU</h2>
+
+    <button class="menuBtn" onclick="openPage('gram')">
+        GRAM STAINING
+    </button>
+
+    <button class="menuBtn" onclick="openPage('morph')">
+        MORPHOLOGY
+    </button>
+
+    <button class="menuBtn" onclick="openPage('classification')">
+        CLASSIFICATION
+    </button>
+
+</div>
+
+<!-- =========================
+GRAM PAGE
+========================= -->
+
+<div id="gram" class="page">
+
+    <h2>GRAM STAINING PROCEDURE</h2>
+
+    <p>
+        1. Apply Crystal Violet<br>
+        2. Apply Iodine Solution<br>
+        3. Decolorize with Alcohol<br>
+        4. Apply Safranin Counterstain
+    </p>
+
+    <h3>Examples</h3>
+
+    <div class="imageContainer">
+
+        <div>
+            <p>Gram Positive</p>
+            <img src="images/gram_positive.jpg" alt="Gram Positive">
+        </div>
+
+        <div>
+            <p>Gram Negative</p>
+            <img src="images/gram_negative.jpg" alt="Gram Negative">
+        </div>
+
+    </div>
+
+    <button class="menuBtn" onclick="backToMenu()">
+        RETURN
+    </button>
+
+</div>
+
+<!-- =========================
+MORPHOLOGY PAGE
+========================= -->
+
+<div id="morph" class="page">
+
+    <h2>MORPHOLOGY EXAMPLES</h2>
+
+    <div class="imageContainer">
+
+        <div>
+            <p>Bacillus</p>
+            <img src="images/bacillus.jpg" alt="Bacillus">
+        </div>
+
+        <div>
+            <p>Cocci</p>
+            <img src="images/cocci.jpg" alt="Cocci">
+        </div>
+
+        <div>
+            <p>Spiral</p>
+            <img src="images/spiral.jpg" alt="Spiral">
+        </div>
+
+    </div>
+
+    <button class="menuBtn" onclick="backToMenu()">
+        RETURN
+    </button>
+
+</div>
+
+<!-- =========================
+CLASSIFICATION PAGE
+========================= -->
+
+<div id="classification" class="page">
+
+    <h2>SAMPLE CLASSIFICATION</h2>
+
+    <p>Gram Stain</p>
+
+    <select id="gramInput">
+        <option value="">Select...</option>
+        <option value="positive">Positive</option>
+        <option value="negative">Negative</option>
+    </select>
+
+    <p>Morphology</p>
+
+    <select id="morphInput">
+        <option value="">Select...</option>
+        <option value="bacillus">Bacillus</option>
+        <option value="cocci">Cocci</option>
+        <option value="spiral">Spiral</option>
+    </select>
+
+    <br><br>
+
+    <button class="menuBtn" onclick="verifyClassification()">
+        VERIFY
+    </button>
+
+    <p id="classificationResult"></p>
+
+    <button class="menuBtn" onclick="backToMenu()">
+        RETURN
+    </button>
+
+</div>
+
+<!-- =========================
+INVESTIGATION MENU
+========================= -->
+
+<div id="investigationMenu" class="page">
+
+    <h2>INVESTIGATION TERMINAL</h2>
+
+    <button class="menuBtn">
+        AUDIO LOGS
+    </button>
+
+    <button class="menuBtn">
+        DATABASE
+    </button>
+
+</div>
+
+<script>
+
+/* =========================
+BOOT
+========================= */
+
+const boot = document.getElementById("boot");
+const menu = document.getElementById("menu");
+
+document.getElementById("enterBtn").addEventListener("click", () => {
+
+    boot.style.display = "none";
+    menu.style.display = "flex";
+
+});
+
+/* =========================
+PAGE NAVIGATION
+========================= */
+
+function openPage(page){
+
+    document.querySelectorAll(".page")
+    .forEach(p => p.style.display = "none");
+
+    menu.style.display = "none";
+
+    document.getElementById(page).style.display = "block";
+}
+
+function backToMenu(){
+
+    document.querySelectorAll(".page")
+    .forEach(p => p.style.display = "none");
+
+    menu.style.display = "flex";
+}
+
+/* =========================
+CLASSIFICATION CHECK
+========================= */
+
+let investigationUnlocked = false;
+
+function verifyClassification(){
+
+    const gram =
+        document.getElementById("gramInput")
+        .value
+        .toLowerCase();
+
+    const morph =
+        document.getElementById("morphInput")
+        .value
+        .toLowerCase();
+
+    const result =
+        document.getElementById("classificationResult");
+
+    if(
+        gram === "negative" &&
+        morph === "bacillus"
+    ){
+
+        investigationUnlocked = true;
+
+        result.innerHTML =
+        "ACCESS GRANTED<br>INVESTIGATION TERMINAL UNLOCKED";
+
+        setTimeout(() => {
+
+            document.querySelectorAll(".page")
+            .forEach(p => p.style.display = "none");
+
+            document.getElementById("investigationMenu")
+            .style.display = "block";
+
+        }, 1500);
+
+    }
+    else{
+
+        result.innerHTML =
+        "CLASSIFICATION ERROR";
+
+    }
+}
+
+</script>
+
+</body>
+</html>
