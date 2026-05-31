@@ -401,9 +401,9 @@ INVESTIGATION MENU
         AUDIO LOGS
     </button>
 
-    <button class="menuBtn">
-        DATABASE
-    </button>
+   <button class="menuBtn" onclick="openPage('database')">
+    DATABASE
+</button>
 
     <br>
 
@@ -466,9 +466,35 @@ INVESTIGATION MENU
 <audio id="audioPlayer"></audio>
 <br><br>
 
-<button class="menuBtn"
-        onclick="openPage('investigationMenu')">
+<button class="menuBtn" onclick="openPage('investigationMenu')">
     RETURN
+</button>
+
+</div>
+
+<div id="database" class="page">
+
+    <h2>GENESIS BIOSYSTEMS DATABASE</h2>
+
+    <p>SEARCH INDEX</p>
+
+    <input id="searchInput" placeholder="Search bacteria / symptoms / logs">
+
+    <br><br>
+
+    <button class="menuBtn" onclick="searchDatabase()">
+        SEARCH
+    </button>
+
+    <div id="dbResults" style="margin-top:20px;"></div>
+
+    <br><br>
+
+    <button class="menuBtn" onclick="backToMenu()">
+        RETURN
+    </button>
+
+</div>
 </button>
 </div>
 <script>
@@ -540,7 +566,13 @@ function verifyClassification(){
   if(
     gram === "negative" &&
     morph === "bacillus"
+    
 ){
+    database.forEach(entry => {
+    if(entry.name.includes("SPIRAL-X")){
+        entry.unlocked = true;
+    }
+});
 
     verifySound.currentTime = 0;
     verifySound.play();
@@ -586,6 +618,53 @@ function playLog(file,title){
 
 }
 
+function searchDatabase(){
+
+    const query =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    const results =
+        document.getElementById("dbResults");
+
+    results.innerHTML = "";
+
+    const filtered = database.filter(entry => {
+
+        if(!entry.unlocked) return false;
+
+        return (
+            entry.name.toLowerCase().includes(query) ||
+            (entry.type && entry.type.includes(query)) ||
+            (entry.gram && entry.gram.includes(query)) ||
+            (entry.morphology && entry.morphology.includes(query)) ||
+            (entry.notes && entry.notes.toLowerCase().includes(query))
+        );
+    });
+
+    if(filtered.length === 0){
+        results.innerHTML = "<p>NO MATCHES FOUND</p>";
+        return;
+    }
+
+    filtered.forEach(entry => {
+
+        const div = document.createElement("div");
+
+        div.style.border = "1px solid #00ffcc";
+        div.style.padding = "10px";
+        div.style.marginBottom = "10px";
+        div.style.background = "rgba(0,255,200,0.05)";
+
+        div.innerHTML = `
+            <h3>${entry.name}</h3>
+            <p>${entry.notes}</p>
+        `;
+
+        results.appendChild(div);
+    });
+}
 document.querySelectorAll("button").forEach(btn => {
 
     btn.addEventListener("click", () => {
@@ -629,7 +708,39 @@ seekBar.addEventListener(
     }
 
 });
-    
+
+const database = [
+    {
+        name: "BACILLUS ALPHA-7",
+        type: "bacteria",
+        gram: "negative",
+        morphology: "bacillus",
+        notes: "Highly aggressive strain. Found near containment breach zone.",
+        unlocked: true
+    },
+    {
+        name: "COCCI STRAIN B-12",
+        type: "bacteria",
+        gram: "positive",
+        morphology: "cocci",
+        notes: "Stable colony organism. Low threat level.",
+        unlocked: true
+    },
+    {
+        name: "SPIRAL-X CONTAMINANT",
+        type: "bacteria",
+        gram: "negative",
+        morphology: "spiral",
+        notes: "Unknown origin. Audio logs mention hallucination effects.",
+        unlocked: false
+    },
+    {
+        name: "SECURITY LOG: BREACH EVENT",
+        type: "log",
+        notes: "Audio feed corrupted. Contains missing personnel data.",
+        unlocked: false
+    }
+];
 </script>
 
 </body>
