@@ -3,21 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GENESIS BIOSYSTEMS</title>
+<title>GENESIS BIOSYSTEMS - Analysis Terminal</title>
 
 <style>
+
 body{
     margin:0;
     background:black;
     color:#00ffcc;
     font-family:monospace;
     overflow-x:hidden;
-    overflow-y:auto;
 }
 
-/* =========================
-   BOOT SCREEN
-========================= */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+
+    background:
+    repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,.03) 0px,
+        rgba(255,255,255,.03) 1px,
+        transparent 2px,
+        transparent 4px
+    );
+}
+
+h1,h2,h3{
+    text-shadow:
+    0 0 5px #00ffcc,
+    0 0 15px #00ffcc;
+}
+
 #boot{
     position:fixed;
     inset:0;
@@ -36,6 +55,7 @@ body{
     color:#00ffcc;
     border:1px solid #00ffcc;
     cursor:pointer;
+    font-family:monospace;
 }
 
 #enterBtn:hover{
@@ -43,9 +63,6 @@ body{
     color:black;
 }
 
-/* =========================
-   MENU
-========================= */
 #menu{
     display:none;
     min-height:100vh;
@@ -55,236 +72,266 @@ body{
     gap:20px;
 }
 
-/* =========================
-   PAGES
-========================= */
 .page{
     display:none;
     padding:30px;
-    max-width:1000px;
+    max-width:1100px;
     margin:auto;
 }
 
-/* buttons */
 .menuBtn{
-    width:280px;
-    padding:12px;
+    width:320px;
+    padding:14px;
     background:black;
     color:#00ffcc;
     border:1px solid #00ffcc;
     cursor:pointer;
-}
-
-/* inputs */
-input, select{
-    background:black;
-    color:#00ffcc;
-    border:1px solid #00ffcc;
-    padding:8px;
-    width:280px;
     font-family:monospace;
+
+    box-shadow:
+        0 0 5px #00ffcc;
 }
 
-#classificationResult{
-    margin-top:20px;
-    font-weight:bold;
+.menuBtn:hover{
+    background:#00ffcc;
+    color:black;
+
+    box-shadow:
+        0 0 15px #00ffcc,
+        0 0 30px #00ffcc;
 }
+
+.imageContainer{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:20px;
+}
+
+.imageCard{
+    text-align:center;
+}
+
+img{
+    width:300px;
+    height:300px;
+    object-fit:contain;
+    background:white;
+    border:1px solid #00ffcc;
+}
+
+.instructions{
+    border:1px solid #00ffcc;
+    padding:20px;
+    background:rgba(0,255,200,.05);
+    line-height:1.8;
+}
+
 </style>
 </head>
-
 <body>
 
-<!-- BOOT -->
+<!-- BOOT SCREEN -->
+
 <div id="boot">
+
     <h1>GENESIS BIOSYSTEMS</h1>
+
+    <p>Laboratory Analysis Terminal</p>
+
     <p>Containment Network v4.0</p>
-    <button id="enterBtn">PRESS ENTER</button>
+
+    <button id="enterBtn">
+        ACCESS TERMINAL
+    </button>
+
 </div>
 
-<!-- MENU -->
+<!-- MAIN MENU -->
+
 <div id="menu">
-    <h2>MAIN MENU</h2>
 
-    <button class="menuBtn" onclick="openPage('gram')">GRAM STAINING</button>
-    <button class="menuBtn" onclick="openPage('morph')">MORPHOLOGY</button>
-    <button class="menuBtn" onclick="openPage('classification')">CLASSIFICATION</button>
+    <h1>ANALYSIS TERMINAL</h1>
+
+    <button class="menuBtn" onclick="openPage('microscope')">
+        MICROSCOPE INSTRUCTIONS
+    </button>
+
+    <button class="menuBtn" onclick="openPage('gram')">
+        GRAM STAIN PROCEDURE
+    </button>
+
+    <button class="menuBtn" onclick="openPage('morphology')">
+        MORPHOLOGY GUIDE
+    </button>
+
 </div>
 
-<!-- GRAM -->
+<!-- MICROSCOPE PAGE -->
+
+<div id="microscope" class="page">
+
+    <h2>MICROSCOPE OPERATING INSTRUCTIONS</h2>
+
+    <div class="instructions">
+
+        <p>
+        1. Place prepared slide on microscope stage.
+        </p>
+
+        <p>
+        2. Secure slide using stage clips.
+        </p>
+
+        <p>
+        3. Begin with the lowest magnification objective.
+        </p>
+
+        <p>
+        4. Use coarse focus until specimen becomes visible.
+        </p>
+
+        <p>
+        5. Use fine focus to sharpen image.
+        </p>
+
+        <p>
+        6. Increase magnification as needed.
+        </p>
+
+        <p>
+        7. Use only the fine adjustment when using high magnification.
+        </p>
+
+        <p>
+        8. Ensure microscope lens never touches the slide.
+        </p>
+
+    </div>
+
+    <br>
+
+    <button class="menuBtn" onclick="backToMenu()">
+        RETURN
+    </button>
+
+</div>
+
+<!-- GRAM STAIN PAGE -->
+
 <div id="gram" class="page">
-    <h2>GRAM STAINING</h2>
 
-    <div>
-        <p>Gram Positive</p>
-        <img src="gram_positive.jpg">
+    <h2>GRAM STAIN PROCEDURE</h2>
+
+    <div class="instructions">
+
+        <p>1. Create a smear on the microscope slide.</p>
+
+        <p>2. Allow smear to dry completely.</p>
+
+        <p>3. Heat-fix by passing slide above flame three times.</p>
+
+        <p>4. Apply Crystal Violet for 60 seconds.</p>
+
+        <p>5. Rinse with water.</p>
+
+        <p>6. Apply Iodine for 60 seconds.</p>
+
+        <p>7. Rinse with water.</p>
+
+        <p>8. Decolorize using alcohol.</p>
+
+        <p>9. Apply Safranin for 60 seconds.</p>
+
+        <p>10. Rinse with water.</p>
+
+        <p>11. Dry slide.</p>
+
+        <p>12. Apply coverslip and examine.</p>
+
     </div>
 
-    <div>
-        <p>Gram Negative</p>
-        <img src="gram_negative.jpg">
+    <h3>REFERENCE IMAGES</h3>
+
+    <div class="imageContainer">
+
+        <div class="imageCard">
+            <p>GRAM POSITIVE</p>
+            <img src="gram_positive.jpg">
+        </div>
+
+        <div class="imageCard">
+            <p>GRAM NEGATIVE</p>
+            <img src="gram_negative.jpg">
+        </div>
+
     </div>
 
-    <button class="menuBtn" onclick="backToMenu()">RETURN</button>
+    <button class="menuBtn" onclick="backToMenu()">
+        RETURN
+    </button>
+
 </div>
 
-<!-- MORPH -->
-<div id="morph" class="page">
-    <h2>MORPHOLOGY</h2>
+<!-- MORPHOLOGY PAGE -->
 
-    <div>
-        <p>Bacillus</p>
-        <img src="bacillus.jpg">
+<div id="morphology" class="page">
+
+    <h2>BACTERIAL MORPHOLOGY GUIDE</h2>
+
+    <div class="imageContainer">
+
+        <div class="imageCard">
+            <p>BACILLUS</p>
+            <img src="bacillus.jpg">
+        </div>
+
+        <div class="imageCard">
+            <p>COCCI</p>
+            <img src="cocci.jpg">
+        </div>
+
+        <div class="imageCard">
+            <p>SPIRAL</p>
+            <img src="spiral.jpg">
+        </div>
+
     </div>
 
-    <div>
-        <p>Cocci</p>
-        <img src="cocci.jpg">
-    </div>
+    <button class="menuBtn" onclick="backToMenu()">
+        RETURN
+    </button>
 
-    <div>
-        <p>Spiral</p>
-        <img src="spiral.jpg">
-    </div>
-
-    <button class="menuBtn" onclick="backToMenu()">RETURN</button>
-</div>
-
-<!-- CLASSIFICATION -->
-<div id="classification" class="page">
-    <h2>SAMPLE CLASSIFICATION</h2>
-
-    <p>Gram Stain</p>
-    <select id="gramInput">
-        <option value="">Select...</option>
-        <option value="positive">Positive</option>
-        <option value="negative">Negative</option>
-    </select>
-
-    <p>Morphology</p>
-    <select id="morphInput">
-        <option value="">Select...</option>
-        <option value="bacillus">Bacillus</option>
-        <option value="cocci">Cocci</option>
-        <option value="spiral">Spiral</option>
-    </select>
-
-    <br><br>
-
-    <button class="menuBtn" onclick="verifyClassification()">VERIFY</button>
-
-    <p id="classificationResult"></p>
-
-    <button class="menuBtn" onclick="backToMenu()">RETURN</button>
 </div>
 
 <script>
-
-/* =========================
-BOOT
-========================= */
 
 const boot = document.getElementById("boot");
 const menu = document.getElementById("menu");
 
 document.getElementById("enterBtn").addEventListener("click", () => {
+
     boot.style.display = "none";
     menu.style.display = "flex";
+
 });
 
-/* =========================
-PAGE NAV
-========================= */
-
 function openPage(page){
-    document.querySelectorAll(".page").forEach(p => p.style.display = "none");
+
+    document.querySelectorAll(".page")
+    .forEach(p => p.style.display = "none");
+
     menu.style.display = "none";
+
     document.getElementById(page).style.display = "block";
 }
 
 function backToMenu(){
-    document.querySelectorAll(".page").forEach(p => p.style.display = "none");
+
+    document.querySelectorAll(".page")
+    .forEach(p => p.style.display = "none");
+
     menu.style.display = "flex";
-}
-
-/* =========================
-DATABASE SAFETY CHECK
-========================= */
-
-if (typeof database === "undefined") {
-    console.warn("DATABASE is not defined. Add your dataset before verification works.");
-}
-
-/* =========================
-FIXED CLASSIFICATION LOGIC
-========================= */
-
-function verifyClassification() {
-
-    const gramEl = document.getElementById("gramInput");
-    const morphEl = document.getElementById("morphInput");
-    const result = document.getElementById("classificationResult");
-
-    if (!gramEl || !morphEl || !result) return;
-    if (!Array.isArray(database)) {
-        result.style.color = "#ff4444";
-        result.innerHTML = "DATABASE ERROR";
-        return;
-    }
-
-    const gram = gramEl.value.trim().toLowerCase();
-    const morph = morphEl.value.trim().toLowerCase();
-
-    const matches = database.filter(entry => {
-    if (!entry) return false;
-
-    const gram = gramEl.value.toLowerCase().trim();
-    const morph = morphEl.value.toLowerCase().trim();
-
-    const entryGram = (entry.gram || "").toLowerCase().trim();
-    const entryMorph = (entry.morphology || "").toLowerCase().trim();
-
-    return (
-        entryGram === gram &&
-        entryMorph === morph &&
-        entry.unlocked === true
-    );
-});
-
-    if (matches.length === 0) {
-        result.style.color = "#ff4444";
-        result.innerHTML = "CLASSIFICATION ERROR";
-        return;
-    }
-
-    const database = [
-    {
-        name: "E. coli",
-        gram: "negative",
-        morphology: "bacillus",
-        unlocked: true,
-        role: "primary_pathogen"
-    },
-    {
-        name: "Staphylococcus",
-        gram: "positive",
-        morphology: "cocci",
-        unlocked: true
-    },
-    {
-        name: "Spirillum",
-        gram: "negative",
-        morphology: "spiral",
-        unlocked: true
-    }
-];
-    const selected = matches.find(e => e.role === "primary_pathogen") || matches[0];
-
-    result.style.color = "#00ff66";
-    result.innerHTML = "MATCH FOUND: " + selected.name;
-
-    setTimeout(() => {
-        openPage("investigationMenu");
-    }, 1000);
 }
 
 </script>
