@@ -326,42 +326,27 @@ INVESTIGATION MENU
     <h2>RECOVERED AUDIO LOGS</h2>
 
     <button class="menuBtn"
-        onclick="playLog(
-        'audio/log1.mp3',
-        'LOG 01 - Lilly Porter'
-        )">
+        onclick="playLog('log1.mp3','LOG 01 - Lilly Porter')">
         LOG 01 - Lilly Porter
     </button>
 
     <button class="menuBtn"
-        onclick="playLog(
-        'audio/log2.mp3',
-        'LOG 02 - Francisco Salazar'
-        )">
+        onclick="playLog('log2.mp3','LOG 02 - Francisco Salazar')">
         LOG 02 - Francisco Salazar
     </button>
 
     <button class="menuBtn"
-        onclick="playLog(
-        'audio/log3.mp3',
-        'LOG 03 - Brenda St. John'
-        )">
+        onclick="playLog('log3.mp3','LOG 03 - Brenda St. John')">
         LOG 03 - Brenda St. John
     </button>
 
     <button class="menuBtn"
-        onclick="playLog(
-        'audio/log4.mp3',
-        'LOG 04 - Allen & Donna Gilsh'
-        )">
+        onclick="playLog('log4.mp3','LOG 04 - Allen & Donna Gilsh')">
         LOG 04 - Allen & Donna Gilsh
     </button>
 
     <button class="menuBtn"
-        onclick="playLog(
-        'audio/log5.mp3',
-        'SECURITY FEED'
-        )">
+        onclick="playLog('log5.mp3','SECURITY FEED')">
         SECURITY FEED
     </button>
 
@@ -369,7 +354,11 @@ INVESTIGATION MENU
 
     <div id="currentLog"></div>
 
-    <br>
+    <audio id="audioPlayer" controls
+           style="width:100%;max-width:700px;margin-top:20px;">
+    </audio>
+
+    <br><br>
 
     <button class="menuBtn"
         onclick="openPage('investigationMenu')">
@@ -469,13 +458,12 @@ let currentAudio = null;
 
 function playLog(file, title){
 
-    if(currentAudio){
-        currentAudio.pause();
-    }
+    const player =
+        document.getElementById("audioPlayer");
 
-    currentAudio = new Audio(file);
+    player.src = file;
 
-    currentAudio.play();
+    player.play();
 
     document.getElementById("currentLog").innerHTML =
         "NOW PLAYING:<br>" + title;
