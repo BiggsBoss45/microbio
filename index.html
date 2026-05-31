@@ -630,18 +630,20 @@ function searchDatabase(){
 
     results.innerHTML = "";
 
-    const filtered = database.filter(entry => {
+   const filtered = database.filter(entry => {
 
-        if(!entry.unlocked) return false;
+    if(!entry.unlocked) return false;
 
-        return (
-            entry.name.toLowerCase().includes(query) ||
-            (entry.type && entry.type.includes(query)) ||
-            (entry.gram && entry.gram.includes(query)) ||
-            (entry.morphology && entry.morphology.includes(query)) ||
-            (entry.notes && entry.notes.toLowerCase().includes(query))
-        );
-    });
+    return (
+        entry.name.toLowerCase().includes(query) ||
+        entry.category.toLowerCase().includes(query) ||
+        entry.type.toLowerCase().includes(query) ||
+        (entry.gram && entry.gram.includes(query)) ||
+        (entry.morphology && entry.morphology.includes(query)) ||
+        (entry.notes && entry.notes.toLowerCase().includes(query)) ||
+        (entry.id && entry.id.toLowerCase().includes(query))
+    );
+});
 
     if(filtered.length === 0){
         results.innerHTML = "<p>NO MATCHES FOUND</p>";
@@ -657,11 +659,15 @@ function searchDatabase(){
         div.style.marginBottom = "10px";
         div.style.background = "rgba(0,255,200,0.05)";
 
-        div.innerHTML = `
-            <h3>${entry.name}</h3>
-            <p>${entry.notes}</p>
-        `;
-
+       div.innerHTML = `
+    <h3>${entry.name}</h3>
+    <p><strong>ID:</strong> ${entry.id}</p>
+    <p><strong>CATEGORY:</strong> ${entry.category.toUpperCase()}</p>
+    <p><strong>TYPE:</strong> ${entry.type}</p>
+    <p><strong>STATUS:</strong> ${entry.status || "UNKNOWN"}</p>
+    <p><strong>THREAT:</strong> ${entry.threatLevel || "N/A"}</p>
+    <p>${entry.notes}</p>
+`;
         results.appendChild(div);
     });
 }
@@ -710,36 +716,103 @@ seekBar.addEventListener(
 });
 
 const database = [
-    {
-        name: "BACILLUS ALPHA-7",
-        type: "bacteria",
-        gram: "negative",
-        morphology: "bacillus",
-        notes: "Highly aggressive strain. Found near containment breach zone.",
-        unlocked: true
-    },
-    {
-        name: "COCCI STRAIN B-12",
-        type: "bacteria",
-        gram: "positive",
-        morphology: "cocci",
-        notes: "Stable colony organism. Low threat level.",
-        unlocked: true
-    },
-    {
-        name: "SPIRAL-X CONTAMINANT",
-        type: "bacteria",
-        gram: "negative",
-        morphology: "spiral",
-        notes: "Unknown origin. Audio logs mention hallucination effects.",
-        unlocked: false
-    },
-    {
-        name: "SECURITY LOG: BREACH EVENT",
-        type: "log",
-        notes: "Audio feed corrupted. Contains missing personnel data.",
-        unlocked: false
-    }
+/* =========================
+   BACTERIA / ORGANISMS
+========================= */
+{
+    id: "BAC-ALPHA-7",
+    name: "BACILLUS ALPHA-7",
+    category: "organism",
+    type: "bacteria",
+    gram: "negative",
+    morphology: "bacillus",
+    threatLevel: 4,
+    status: "contained",
+    notes: "Highly aggressive strain recovered near Sector 3 breach site. Exhibits accelerated replication under UV exposure.",
+    unlocked: true
+},
+{
+    id: "COC-B12",
+    name: "COCCI STRAIN B-12",
+    category: "organism",
+    type: "bacteria",
+    gram: "positive",
+    morphology: "cocci",
+    threatLevel: 1,
+    status: "stable",
+    notes: "Non-aggressive colony organism used in early containment simulations.",
+    unlocked: true
+},
+{
+    id: "SPX-UNKNOWN",
+    name: "SPIRAL-X CONTAMINANT",
+    category: "anomaly",
+    type: "unknown",
+    gram: "negative",
+    morphology: "spiral",
+    threatLevel: 5,
+    status: "uncontained",
+    notes: "Audio logs describe auditory hallucinations and temporal distortion effects near subject exposure zones.",
+    unlocked: false
+},
+
+/* =========================
+   INCIDENTS / EVENTS
+========================= */
+{
+    id: "INC-004",
+    name: "CONTAINMENT BREACH EVENT",
+    category: "incident",
+    type: "event",
+    severity: "critical",
+    notes: "Sector 3 containment failure resulted in partial organism escape. Personnel losses unconfirmed.",
+    unlocked: false
+},
+{
+    id: "INC-009",
+    name: "BLACKOUT PROTOCOL ACTIVATION",
+    category: "incident",
+    type: "protocol",
+    severity: "high",
+    notes: "Facility-wide systems shutdown initiated after anomaly detection in ventilation network.",
+    unlocked: false
+},
+
+/* =========================
+   AUDIO / LOGS
+========================= */
+{
+    id: "LOG-01",
+    name: "AUDIO LOG 01 - LILLY PORTER",
+    category: "log",
+    type: "audio",
+    notes: "First-hand account of contamination symptoms and memory loss events.",
+    file: "log1.mp3",
+    unlocked: true
+},
+{
+    id: "LOG-05",
+    name: "SECURITY FEED - CORRUPTED",
+    category: "log",
+    type: "audio",
+    notes: "Feed contains fragmented audio and unidentified background interference.",
+    file: "log5.mp3",
+    unlocked: false
+},
+
+/* =========================
+   SAMPLES
+========================= */
+{
+    id: "SMP-21",
+    name: "TISSUE SAMPLE 21-B",
+    category: "sample",
+    type: "biological",
+    gram: "negative",
+    morphology: "bacillus",
+    notes: "Extracted from containment breach corridor wall biofilm.",
+    unlocked: false
+}
 ];
 </script>
 
