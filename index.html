@@ -550,17 +550,20 @@ let investigationUnlocked = false;
 
 function verifyClassification() {
 
-    const gram = document.getElementById("gramInput").value.toLowerCase();
-    const morph = document.getElementById("morphInput").value.toLowerCase();
+    const gram = document.getElementById("gramInput").value.trim().toLowerCase();
+    const morph = document.getElementById("morphInput").value.trim().toLowerCase();
 
     const result = document.getElementById("classificationResult");
 
-    // find matching entries
-    const matches = database.filter(entry => 
-        entry.gram === gram &&
-        entry.morphology === morph &&
-        entry.unlocked
-    );
+    const matches = database.filter(entry => {
+
+        if (!entry.unlocked) return false;
+
+        const g = (entry.gram || "").toLowerCase().trim();
+        const m = (entry.morphology || "").toLowerCase().trim();
+
+        return g === gram && m === morph;
+    });
 
     if (matches.length === 0) {
         result.style.color = "#ff4444";
@@ -568,10 +571,9 @@ function verifyClassification() {
         return;
     }
 
-    // pick best match (your main target priority system)
-    const target = matches.find(e => e.role === "primary_pathogen");
-
-    const selected = target || matches[0];
+    const selected =
+        matches.find(e => e.role === "primary_pathogen")
+        || matches[0];
 
     verifySound.currentTime = 0;
     verifySound.play();
@@ -579,15 +581,11 @@ function verifyClassification() {
     result.style.color = "#00ff66";
     result.innerHTML = "MATCH FOUND: " + selected.name;
 
-    // unlock investigation
     setTimeout(() => {
-
         document.querySelectorAll(".page")
             .forEach(p => p.style.display = "none");
 
-        document.getElementById("investigationMenu")
-            .style.display = "block";
-
+        document.getElementById("investigationMenu").style.display = "block";
     }, 1200);
 }
 
