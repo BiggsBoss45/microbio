@@ -14,10 +14,10 @@ body{
     overflow-x:hidden;
     overflow-y:auto;
 }
+
 /* =========================
    BOOT SCREEN
 ========================= */
-
 #boot{
     position:fixed;
     inset:0;
@@ -43,53 +43,9 @@ body{
     color:black;
 }
 
-#audioTerminal{
-
-    display:flex;
-    align-items:center;
-    gap:15px;
-    margin-top:20px;
-    border:1px solid #00ffcc;
-    padding:15px;
-    background:rgba(0,255,200,.05);
-
-}
-
-#audioTerminal button{
-
-    background:black;
-    color:#00ffcc;
-    border:1px solid #00ffcc;
-    padding:8px 16px;
-    cursor:pointer;
-    font-family:monospace;
-
-}
-
-#audioTerminal button:hover{
-
-    background:#00ffcc;
-    color:black;
-
-}
-
-#seekBar{
-
-    flex:1;
-
-}
-
-#currentLog{
-
-    text-align:center;
-    font-size:1.2em;
-    margin-top:20px;
-
-}
 /* =========================
    MENU
 ========================= */
-
 #menu{
     display:none;
     min-height:100vh;
@@ -99,28 +55,9 @@ body{
     gap:20px;
 }
 
-#audioPlayer{
-    display:none;
-}
-
-#currentLog{
-    text-align:center;
-    font-size:1.2em;
-    margin-top:20px;
-    border:1px solid #00ffcc;
-    padding:15px;
-    background:rgba(0,255,200,.05);
-}
-
-#seekBar{
-    flex:1;
-    accent-color:#00ffcc;
-}
-
 /* =========================
    PAGES
 ========================= */
-
 .page{
     display:none;
     padding:30px;
@@ -128,34 +65,7 @@ body{
     margin:auto;
 }
 
-.page h2{
-    text-align:center;
-}
-
-img{
-    width:300px;
-    max-width:100%;
-    border:1px solid #00ffcc;
-    margin:10px;
-    background:white;
-}
-
-img{
-    width:300px;
-    height:300px;
-    object-fit:contain;
-    display:block;
-    background:white;
-    border:1px solid #00ffcc;
-    margin:10px;
-}
-.imageContainer{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:20px;
-}
-
+/* buttons */
 .menuBtn{
     width:280px;
     padding:12px;
@@ -163,52 +73,10 @@ img{
     color:#00ffcc;
     border:1px solid #00ffcc;
     cursor:pointer;
-    font-family:monospace;
-
-    transition:.2s;
-
-    box-shadow:
-        0 0 5px #00ffcc;
 }
 
-.menuBtn:hover{
-    background:#00ffcc;
-    color:black;
-
-    box-shadow:
-        0 0 15px #00ffcc,
-        0 0 30px #00ffcc;
-}
-
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-
-    background:
-    repeating-linear-gradient(
-        to bottom,
-        rgba(255,255,255,.03) 0px,
-        rgba(255,255,255,.03) 1px,
-        transparent 2px,
-        transparent 4px
-    );
-
-    opacity:.4;
-}
-
-h1,h2,h3{
-    text-shadow:
-    0 0 5px #00ffcc,
-    0 0 15px #00ffcc;
-}
-/* =========================
-   INPUTS
-========================= */
-
-input,
-select{
+/* inputs */
+input, select{
     background:black;
     color:#00ffcc;
     border:1px solid #00ffcc;
@@ -223,143 +91,69 @@ select{
 }
 </style>
 </head>
+
 <body>
 
-<!-- =========================
-BOOT SCREEN
-========================= -->
-
+<!-- BOOT -->
 <div id="boot">
     <h1>GENESIS BIOSYSTEMS</h1>
     <p>Containment Network v4.0</p>
-    <p>Initializing system...</p>
-
-    <button id="enterBtn">
-        PRESS ENTER
-    </button>
+    <button id="enterBtn">PRESS ENTER</button>
 </div>
 
-<!-- =========================
-MAIN MENU
-========================= -->
-
+<!-- MENU -->
 <div id="menu">
-
     <h2>MAIN MENU</h2>
 
-    <button class="menuBtn" onclick="openPage('gram')">
-        GRAM STAINING
-    </button>
-
-    <button class="menuBtn" onclick="openPage('morph')">
-        MORPHOLOGY
-    </button>
-
-    <button class="menuBtn" onclick="openPage('classification')">
-        CLASSIFICATION
-    </button>
-
+    <button class="menuBtn" onclick="openPage('gram')">GRAM STAINING</button>
+    <button class="menuBtn" onclick="openPage('morph')">MORPHOLOGY</button>
+    <button class="menuBtn" onclick="openPage('classification')">CLASSIFICATION</button>
 </div>
 
-<!-- =========================
-GRAM PAGE
-========================= -->
-
+<!-- GRAM -->
 <div id="gram" class="page">
+    <h2>GRAM STAINING</h2>
 
-    <h2>GRAM STAINING PROCEDURE</h2>
-
-    <p>
-        1. Take a microscope slide and, using the Q-tip in the vial, create circular smear (filled in circle) in the middle of the slide.<br>
-        
-        2. Wait until the smear appears fogged up/dry.<br>
-        
-        3. Using the lighter, grab the slide and wave up it above the flame three times. Do not let the slide touch the flame.<br>
-        
-        4. Apply Crystal Violet to the smear and wait 60 seconds.<br>
-        
-        5. Tilt the slide and,using the pipette, wash the slide by applying water to the top end of the slide until the majory of the Crystal Violet is washed away.<br>
-        
-        6. Apply Iodine Solution to the smear and wait 60 seconds <br>
-        
-        7. Tilt the slide and,using the pipette, wash the slide by applying water to the top end of the slide until the majory of the Iodine is washed away.<br>
-        
-        8. Tilt the slide and apply alcohol to the slide until the whole slide has been washed.<br>
-        
-        9. Apply Safranin Counterstain to the smear and wait 60 seconds.<br>
-        
-       10. Tilt the slide and,using the pipette, wash the slide by applying water to the top end of the slide until the majory of the Safranin is washed away.<br>
-        
-       11. Dry the slide and place a slide cover to the smear.
-        
-       12. When using the microscope make sure that the lens does NOT touch the slide.
-    </p>
-
-    <h3>Examples</h3>
-
-    <div class="imageContainer">
-
-        <div>
-            <p>Gram Positive</p>
-          <img src="gram_positive.jpg">
-        </div>
-
-        <div>
-            <p>Gram Negative</p>
-           <img src="gram_negative.jpg">
-        </div>
-
+    <div>
+        <p>Gram Positive</p>
+        <img src="gram_positive.jpg">
     </div>
 
-    <button class="menuBtn" onclick="backToMenu()">
-        RETURN
-    </button>
+    <div>
+        <p>Gram Negative</p>
+        <img src="gram_negative.jpg">
+    </div>
 
+    <button class="menuBtn" onclick="backToMenu()">RETURN</button>
 </div>
 
-<!-- =========================
-MORPHOLOGY PAGE
-========================= -->
-
+<!-- MORPH -->
 <div id="morph" class="page">
+    <h2>MORPHOLOGY</h2>
 
-    <h2>MORPHOLOGY EXAMPLES</h2>
-
-    <div class="imageContainer">
-
-        <div>
-            <p>Bacillus</p>
-           <img src="bacillus.jpg">
-        </div>
-
-        <div>
-            <p>Cocci</p>
-           <img src="cocci.jpg">
-        </div>
-
-        <div>
-            <p>Spiral</p>
-           <img src="spiral.jpg">
-        </div>
-
+    <div>
+        <p>Bacillus</p>
+        <img src="bacillus.jpg">
     </div>
 
-    <button class="menuBtn" onclick="backToMenu()">
-        RETURN
-    </button>
+    <div>
+        <p>Cocci</p>
+        <img src="cocci.jpg">
+    </div>
 
+    <div>
+        <p>Spiral</p>
+        <img src="spiral.jpg">
+    </div>
+
+    <button class="menuBtn" onclick="backToMenu()">RETURN</button>
 </div>
 
-<!-- =========================
-CLASSIFICATION PAGE
-========================= -->
-
+<!-- CLASSIFICATION -->
 <div id="classification" class="page">
-
     <h2>SAMPLE CLASSIFICATION</h2>
 
     <p>Gram Stain</p>
-
     <select id="gramInput">
         <option value="">Select...</option>
         <option value="positive">Positive</option>
@@ -367,7 +161,6 @@ CLASSIFICATION PAGE
     </select>
 
     <p>Morphology</p>
-
     <select id="morphInput">
         <option value="">Select...</option>
         <option value="bacillus">Bacillus</option>
@@ -377,126 +170,13 @@ CLASSIFICATION PAGE
 
     <br><br>
 
-    <button class="menuBtn" onclick="verifyClassification()">
-        VERIFY
-    </button>
+    <button class="menuBtn" onclick="verifyClassification()">VERIFY</button>
 
     <p id="classificationResult"></p>
 
-    <button class="menuBtn" onclick="backToMenu()">
-        RETURN
-    </button>
-
+    <button class="menuBtn" onclick="backToMenu()">RETURN</button>
 </div>
 
-<!-- =========================
-INVESTIGATION MENU
-========================= -->
-
-<div id="investigationMenu" class="page">
-
-    <h2>INVESTIGATION TERMINAL</h2>
-
-    <button class="menuBtn" onclick="openPage('audioLogs')">
-        AUDIO LOGS
-    </button>
-
-   <button class="menuBtn" onclick="openPage('database')">
-    DATABASE
-</button>
-
-    <br>
-
-    <button class="menuBtn" onclick="backToMenu()">
-        MAIN MENU
-    </button>
-
-</div>
-
-<div id="audioLogs" class="page">
-
-    <h2>RECOVERED AUDIO LOGS</h2>
-
-    <button class="menuBtn"
-        onclick="playLog('log1.mp3','LOG 01 - Lilly Porter')">
-        LOG 01 - Lilly Porter
-    </button>
-
-    <button class="menuBtn"
-        onclick="playLog('log2.mp3','LOG 02 - Francisco Salazar')">
-        LOG 02 - Francisco Salazar
-    </button>
-
-    <button class="menuBtn"
-        onclick="playLog('log3.mp3','LOG 03 - Brenda St. John')">
-        LOG 03 - Brenda St. John
-    </button>
-
-    <button class="menuBtn"
-        onclick="playLog('log4.mp3','LOG 04 - Allen & Donna Gilsh')">
-        LOG 04 - Allen & Donna Gilsh
-    </button>
-
-    <button class="menuBtn"
-        onclick="playLog('log5.mp3','SECURITY FEED')">
-        SECURITY FEED
-    </button>
-
-    <br><br>
-
-    <div id="currentLog">
-    NO AUDIO SELECTED
-</div>
-
-<div id="audioTerminal">
-
-    <button id="playBtn">▶ PLAY</button>
-
-    <button id="pauseBtn">⏸ PAUSE</button>
-
-    <input
-        type="range"
-        id="seekBar"
-        value="0"
-        min="0"
-        max="100">
-
-</div>
-
-<audio id="audioPlayer"></audio>
-<br><br>
-
-<button class="menuBtn" onclick="openPage('investigationMenu')">
-    RETURN
-</button>
-
-</div>
-
-<div id="database" class="page">
-
-    <h2>GENESIS BIOSYSTEMS DATABASE</h2>
-
-    <p>SEARCH INDEX</p>
-
-    <input id="searchInput" placeholder="Search bacteria / symptoms / logs">
-
-    <br><br>
-
-    <button class="menuBtn" onclick="searchDatabase()">
-        SEARCH
-    </button>
-
-    <div id="dbResults" style="margin-top:20px;"></div>
-
-    <br><br>
-
-    <button class="menuBtn" onclick="backToMenu()">
-        RETURN
-    </button>
-
-</div>
-</button>
-</div>
 <script>
 
 /* =========================
@@ -506,88 +186,66 @@ BOOT
 const boot = document.getElementById("boot");
 const menu = document.getElementById("menu");
 
-/* =========================
-   SOUND EFFECTS
-========================= */
-
-const clickSound = new Audio("click.mp3");
-const verifySound = new Audio("verify.mp3");
-
 document.getElementById("enterBtn").addEventListener("click", () => {
-
     boot.style.display = "none";
     menu.style.display = "flex";
-
 });
 
 /* =========================
-PAGE NAVIGATION
+PAGE NAV
 ========================= */
 
 function openPage(page){
-
-    document.querySelectorAll(".page")
-    .forEach(p => p.style.display = "none");
-
+    document.querySelectorAll(".page").forEach(p => p.style.display = "none");
     menu.style.display = "none";
-
     document.getElementById(page).style.display = "block";
 }
 
 function backToMenu(){
-
-    document.querySelectorAll(".page")
-    .forEach(p => p.style.display = "none");
-
+    document.querySelectorAll(".page").forEach(p => p.style.display = "none");
     menu.style.display = "flex";
 }
 
 /* =========================
-CLASSIFICATION CHECK
+DATABASE SAFETY CHECK
 ========================= */
 
-let investigationUnlocked = false;
+if (typeof database === "undefined") {
+    console.warn("DATABASE is not defined. Add your dataset before verification works.");
+}
+
+/* =========================
+FIXED CLASSIFICATION LOGIC
+========================= */
 
 function verifyClassification() {
 
-    console.log("VERIFY CLICKED");
-
     const gramEl = document.getElementById("gramInput");
     const morphEl = document.getElementById("morphInput");
+    const result = document.getElementById("classificationResult");
 
-    if (!gramEl || !morphEl) {
-        console.error("Inputs not found in DOM");
+    if (!gramEl || !morphEl || !result) return;
+    if (!Array.isArray(database)) {
+        result.style.color = "#ff4444";
+        result.innerHTML = "DATABASE ERROR";
         return;
     }
 
     const gram = gramEl.value.trim().toLowerCase();
     const morph = morphEl.value.trim().toLowerCase();
 
-    console.log("INPUTS:", gram, morph);
-
-    if (!Array.isArray(database)) {
-        console.error("DATABASE NOT LOADED");
-        return;
-    }
-
     const matches = database.filter(entry => {
         if (!entry) return false;
 
+        const entryGram = (entry.gram || "").toLowerCase().replace(/\s/g, "");
+        const entryMorph = (entry.morphology || "").toLowerCase().replace(/\s/g, "");
+
         return (
-            (entry.gram || "").toLowerCase().trim() === gram &&
-            (entry.morphology || "").toLowerCase().trim() === morph &&
+            entryGram === gram.replace(/\s/g, "") &&
+            entryMorph === morph.replace(/\s/g, "") &&
             entry.unlocked
         );
     });
-
-    console.log("MATCHES:", matches);
-
-    const result = document.getElementById("classificationResult");
-
-    if (!result) {
-        console.error("Result box missing");
-        return;
-    }
 
     if (matches.length === 0) {
         result.style.color = "#ff4444";
@@ -597,119 +255,13 @@ function verifyClassification() {
 
     const selected = matches.find(e => e.role === "primary_pathogen") || matches[0];
 
-    verifySound.play();
-
     result.style.color = "#00ff66";
     result.innerHTML = "MATCH FOUND: " + selected.name;
 
     setTimeout(() => {
-        document.querySelectorAll(".page").forEach(p => p.style.display = "none");
-        document.getElementById("investigationMenu").style.display = "block";
-    }, 1200);
+        openPage("investigationMenu");
+    }, 1000);
 }
-let currentAudio =
-    document.getElementById("audioPlayer");
-
-function playLog(file,title){
-
-    currentAudio.src = file;
-
-    currentAudio.play();
-
-    document.getElementById("currentLog")
-    .innerHTML =
-    "NOW PLAYING<br>" + title;
-
-}
-
-function searchDatabase(){
-
-    const query =
-        document.getElementById("searchInput")
-        .value
-        .toLowerCase();
-
-    const results =
-        document.getElementById("dbResults");
-
-    results.innerHTML = "";
-
-   const filtered = database.filter(entry => {
-
-    if(!entry.unlocked) return false;
-
-    return (
-    entry.name.toLowerCase().includes(query) ||
-    (entry.type && entry.type.toLowerCase().includes(query)) ||
-    (entry.gram && entry.gram.toLowerCase().includes(query)) ||
-    (entry.morphology && entry.morphology.toLowerCase().includes(query)) ||
-    (entry.id && entry.id.toLowerCase().includes(query))
-);
-});
-
-    if(filtered.length === 0){
-        results.innerHTML = "<p>NO MATCHES FOUND</p>";
-        return;
-    }
-
-    filtered.forEach(entry => {
-
-        const div = document.createElement("div");
-
-        div.style.border = "1px solid #00ffcc";
-        div.style.padding = "10px";
-        div.style.marginBottom = "10px";
-        div.style.background = "rgba(0,255,200,0.05)";
-
-       div.innerHTML = `
-    <h3>${entry.name}</h3>
-    <p><strong>ID:</strong> ${entry.id}</p>
-    <p><strong>CATEGORY:</strong> ${entry.category.toUpperCase()}</p>
-    <p><strong>TYPE:</strong> ${entry.type}</p>
-    <p><strong>STATUS:</strong> ${entry.status || "UNKNOWN"}</p>
-    <p><strong>THREAT:</strong> ${entry.threatLevel || "N/A"}</p>
-    <p>${entry.notes}</p>
-`;
-        results.appendChild(div);
-    });
-}
-document.querySelectorAll("button").forEach(btn => {
-
-    btn.addEventListener("click", () => {
-
-clickSound.pause();
-clickSound.currentTime = 0;
-clickSound.play();
-    });
-
-});
-
-document.getElementById("playBtn").addEventListener("click", () => {
-    if(currentAudio.src){
-        currentAudio.play();
-    }
-});
-
-document.getElementById("pauseBtn").addEventListener("click", () => {
-    currentAudio.pause();
-});
-
-const seekBar = document.getElementById("seekBar");
-
-currentAudio.addEventListener("timeupdate", () => {
-    if (currentAudio.duration && !isNaN(currentAudio.duration)) {
-        seekBar.value =
-            (currentAudio.currentTime / currentAudio.duration) * 100;
-    }
-});
-
-seekBar.addEventListener("input", () => {
-    if (currentAudio.duration) {
-        currentAudio.currentTime =
-            (seekBar.value / 100) * currentAudio.duration;
-    }
-});
-
 
 </script>
 
