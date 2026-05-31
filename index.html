@@ -14,7 +14,6 @@ body{
     overflow-x:hidden;
     overflow-y:auto;
 }
-
 /* =========================
    BOOT SCREEN
 ========================= */
@@ -44,6 +43,49 @@ body{
     color:black;
 }
 
+#audioTerminal{
+
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-top:20px;
+    border:1px solid #00ffcc;
+    padding:15px;
+    background:rgba(0,255,200,.05);
+
+}
+
+#audioTerminal button{
+
+    background:black;
+    color:#00ffcc;
+    border:1px solid #00ffcc;
+    padding:8px 16px;
+    cursor:pointer;
+    font-family:monospace;
+
+}
+
+#audioTerminal button:hover{
+
+    background:#00ffcc;
+    color:black;
+
+}
+
+#seekBar{
+
+    flex:1;
+
+}
+
+#currentLog{
+
+    text-align:center;
+    font-size:1.2em;
+    margin-top:20px;
+
+}
 /* =========================
    MENU
 ========================= */
@@ -57,19 +99,22 @@ body{
     gap:20px;
 }
 
-.menuBtn{
-    width:280px;
-    padding:12px;
-    background:black;
-    color:#00ffcc;
-    border:1px solid #00ffcc;
-    cursor:pointer;
-    font-family:monospace;
+#audioPlayer{
+    display:none;
 }
 
-.menuBtn:hover{
-    background:#00ffcc;
-    color:black;
+#currentLog{
+    text-align:center;
+    font-size:1.2em;
+    margin-top:20px;
+    border:1px solid #00ffcc;
+    padding:15px;
+    background:rgba(0,255,200,.05);
+}
+
+#seekBar{
+    flex:1;
+    accent-color:#00ffcc;
 }
 
 /* =========================
@@ -111,6 +156,53 @@ img{
     gap:20px;
 }
 
+.menuBtn{
+    width:280px;
+    padding:12px;
+    background:black;
+    color:#00ffcc;
+    border:1px solid #00ffcc;
+    cursor:pointer;
+    font-family:monospace;
+
+    transition:.2s;
+
+    box-shadow:
+        0 0 5px #00ffcc;
+}
+
+.menuBtn:hover{
+    background:#00ffcc;
+    color:black;
+
+    box-shadow:
+        0 0 15px #00ffcc,
+        0 0 30px #00ffcc;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+
+    background:
+    repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,.03) 0px,
+        rgba(255,255,255,.03) 1px,
+        transparent 2px,
+        transparent 4px
+    );
+
+    opacity:.4;
+}
+
+h1,h2,h3{
+    text-shadow:
+    0 0 5px #00ffcc,
+    0 0 15px #00ffcc;
+}
 /* =========================
    INPUTS
 ========================= */
@@ -352,19 +444,32 @@ INVESTIGATION MENU
 
     <br><br>
 
-    <div id="currentLog"></div>
+    <div id="currentLog">
+    NO AUDIO SELECTED
+</div>
 
-    <audio id="audioPlayer" controls
-           style="width:100%;max-width:700px;margin-top:20px;">
-    </audio>
+<div id="audioTerminal">
 
-    <br><br>
+    <button id="playBtn">▶ PLAY</button>
 
-    <button class="menuBtn"
+    <button id="pauseBtn">⏸ PAUSE</button>
+
+    <input
+        type="range"
+        id="seekBar"
+        value="0"
+        min="0"
+        max="100">
+
+</div>
+
+<audio id="audioPlayer"></audio>
+<br><br>
+
+<button class="menuBtn"
         onclick="openPage('investigationMenu')">
-        RETURN
-    </button>
-
+    RETURN
+</button>
 </div>
 <script>
 
@@ -374,6 +479,13 @@ BOOT
 
 const boot = document.getElementById("boot");
 const menu = document.getElementById("menu");
+
+/* =========================
+   SOUND EFFECTS
+========================= */
+
+const clickSound = new Audio("click.mp3");
+const verifySound = new Audio("verify.mp3");
 
 document.getElementById("enterBtn").addEventListener("click", () => {
 
@@ -425,15 +537,19 @@ function verifyClassification(){
     const result =
         document.getElementById("classificationResult");
 
-    if(
-        gram === "negative" &&
-        morph === "bacillus"
-    ){
+  if(
+    gram === "negative" &&
+    morph === "bacillus"
+){
 
-        investigationUnlocked = true;
+    verifySound.currentTime = 0;
+    verifySound.play();
 
-        result.innerHTML =
-        "ACCESS GRANTED<br>INVESTIGATION TERMINAL UNLOCKED";
+    investigationUnlocked = true;
+       result.style.color = "#00ff66";
+
+result.innerHTML =
+"ACCESS GRANTED<br>INVESTIGATION TERMINAL UNLOCKED";
 
         setTimeout(() => {
 
@@ -448,27 +564,72 @@ function verifyClassification(){
     }
     else{
 
-        result.innerHTML =
-        "CLASSIFICATION ERROR";
+    result.style.color = "#ff4444";
 
+result.innerHTML =
+"CLASSIFICATION ERROR";
     }
 }
 
-let currentAudio = null;
+let currentAudio =
+    document.getElementById("audioPlayer");
 
-function playLog(file, title){
+function playLog(file,title){
 
-    const player =
-        document.getElementById("audioPlayer");
+    currentAudio.src = file;
 
-    player.src = file;
+    currentAudio.play();
 
-    player.play();
+    document.getElementById("currentLog")
+    .innerHTML =
+    "NOW PLAYING<br>" + title;
 
-    document.getElementById("currentLog").innerHTML =
-        "NOW PLAYING:<br>" + title;
 }
 
+document.querySelectorAll("button").forEach(btn => {
+
+    btn.addEventListener("click", () => {
+
+clickSound.pause();
+clickSound.currentTime = 0;
+clickSound.play();
+    });
+
+});
+
+document.getElementById("playBtn").addEventListener("click", () => {
+    if(currentAudio.src){
+        currentAudio.play();
+    }
+});
+
+document.getElementById("pauseBtn").addEventListener("click", () => {
+    currentAudio.pause();
+});
+const seekBar =
+document.getElementById("seekBar");
+
+currentAudio.addEventListener("timeupdate", () => {
+    if(currentAudio.duration && !isNaN(currentAudio.duration)){
+        seekBar.value =
+        (currentAudio.currentTime / currentAudio.duration) * 100;
+    }
+});
+
+seekBar.addEventListener(
+"input",
+()=>{
+
+    if(currentAudio.duration){
+
+        currentAudio.currentTime =
+        (seekBar.value / 100)
+        * currentAudio.duration;
+
+    }
+
+});
+    
 </script>
 
 </body>
