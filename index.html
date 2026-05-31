@@ -235,17 +235,20 @@ function verifyClassification() {
     const morph = morphEl.value.trim().toLowerCase();
 
     const matches = database.filter(entry => {
-        if (!entry) return false;
+    if (!entry) return false;
 
-        const entryGram = (entry.gram || "").toLowerCase().replace(/\s/g, "");
-        const entryMorph = (entry.morphology || "").toLowerCase().replace(/\s/g, "");
+    const gram = gramEl.value.toLowerCase().trim();
+    const morph = morphEl.value.toLowerCase().trim();
 
-        return (
-            entryGram === gram.replace(/\s/g, "") &&
-            entryMorph === morph.replace(/\s/g, "") &&
-            entry.unlocked
-        );
-    });
+    const entryGram = (entry.gram || "").toLowerCase().trim();
+    const entryMorph = (entry.morphology || "").toLowerCase().trim();
+
+    return (
+        entryGram === gram &&
+        entryMorph === morph &&
+        entry.unlocked === true
+    );
+});
 
     if (matches.length === 0) {
         result.style.color = "#ff4444";
@@ -253,6 +256,27 @@ function verifyClassification() {
         return;
     }
 
+    const database = [
+    {
+        name: "E. coli",
+        gram: "negative",
+        morphology: "bacillus",
+        unlocked: true,
+        role: "primary_pathogen"
+    },
+    {
+        name: "Staphylococcus",
+        gram: "positive",
+        morphology: "cocci",
+        unlocked: true
+    },
+    {
+        name: "Spirillum",
+        gram: "negative",
+        morphology: "spiral",
+        unlocked: true
+    }
+];
     const selected = matches.find(e => e.role === "primary_pathogen") || matches[0];
 
     result.style.color = "#00ff66";
