@@ -550,20 +550,44 @@ let investigationUnlocked = false;
 
 function verifyClassification() {
 
-    const gram = document.getElementById("gramInput").value.trim().toLowerCase();
-    const morph = document.getElementById("morphInput").value.trim().toLowerCase();
+    console.log("VERIFY CLICKED");
+
+    const gramEl = document.getElementById("gramInput");
+    const morphEl = document.getElementById("morphInput");
+
+    if (!gramEl || !morphEl) {
+        console.error("Inputs not found in DOM");
+        return;
+    }
+
+    const gram = gramEl.value.trim().toLowerCase();
+    const morph = morphEl.value.trim().toLowerCase();
+
+    console.log("INPUTS:", gram, morph);
+
+    if (!Array.isArray(database)) {
+        console.error("DATABASE NOT LOADED");
+        return;
+    }
+
+    const matches = database.filter(entry => {
+        if (!entry) return false;
+
+        return (
+            (entry.gram || "").toLowerCase().trim() === gram &&
+            (entry.morphology || "").toLowerCase().trim() === morph &&
+            entry.unlocked
+        );
+    });
+
+    console.log("MATCHES:", matches);
 
     const result = document.getElementById("classificationResult");
 
-    const matches = database.filter(entry => {
-
-        if (!entry.unlocked) return false;
-
-        const g = (entry.gram || "").toLowerCase().trim();
-        const m = (entry.morphology || "").toLowerCase().trim();
-
-        return g === gram && m === morph;
-    });
+    if (!result) {
+        console.error("Result box missing");
+        return;
+    }
 
     if (matches.length === 0) {
         result.style.color = "#ff4444";
@@ -571,24 +595,18 @@ function verifyClassification() {
         return;
     }
 
-    const selected =
-        matches.find(e => e.role === "primary_pathogen")
-        || matches[0];
+    const selected = matches.find(e => e.role === "primary_pathogen") || matches[0];
 
-    verifySound.currentTime = 0;
     verifySound.play();
 
     result.style.color = "#00ff66";
     result.innerHTML = "MATCH FOUND: " + selected.name;
 
     setTimeout(() => {
-        document.querySelectorAll(".page")
-            .forEach(p => p.style.display = "none");
-
+        document.querySelectorAll(".page").forEach(p => p.style.display = "none");
         document.getElementById("investigationMenu").style.display = "block";
     }, 1200);
 }
-
 let currentAudio =
     document.getElementById("audioPlayer");
 
