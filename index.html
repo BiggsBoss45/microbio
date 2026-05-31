@@ -548,59 +548,47 @@ CLASSIFICATION CHECK
 
 let investigationUnlocked = false;
 
-function verifyClassification(){
+function verifyClassification() {
 
-    const gram =
-        document.getElementById("gramInput")
-        .value
-        .toLowerCase();
+    const gram = document.getElementById("gramInput").value.toLowerCase();
+    const morph = document.getElementById("morphInput").value.toLowerCase();
 
-    const morph =
-        document.getElementById("morphInput")
-        .value
-        .toLowerCase();
+    const result = document.getElementById("classificationResult");
 
-    const result =
-        document.getElementById("classificationResult");
+    // find matching entries
+    const matches = database.filter(entry => 
+        entry.gram === gram &&
+        entry.morphology === morph &&
+        entry.unlocked
+    );
 
-  if(
-    gram === "negative" &&
-    morph === "bacillus"
-    
-){
-    database.forEach(entry => {
-    if(entry.name.includes("SPIRAL-X")){
-        entry.unlocked = true;
+    if (matches.length === 0) {
+        result.style.color = "#ff4444";
+        result.innerHTML = "CLASSIFICATION ERROR";
+        return;
     }
-});
+
+    // pick best match (your main target priority system)
+    const target = matches.find(e => e.role === "primary_pathogen");
+
+    const selected = target || matches[0];
 
     verifySound.currentTime = 0;
     verifySound.play();
 
-    investigationUnlocked = true;
-       result.style.color = "#00ff66";
+    result.style.color = "#00ff66";
+    result.innerHTML = "MATCH FOUND: " + selected.name;
 
-result.innerHTML =
-"ACCESS GRANTED<br>INVESTIGATION TERMINAL UNLOCKED";
+    // unlock investigation
+    setTimeout(() => {
 
-        setTimeout(() => {
-
-            document.querySelectorAll(".page")
+        document.querySelectorAll(".page")
             .forEach(p => p.style.display = "none");
 
-            document.getElementById("investigationMenu")
+        document.getElementById("investigationMenu")
             .style.display = "block";
 
-        }, 1500);
-
-    }
-    else{
-
-    result.style.color = "#ff4444";
-
-result.innerHTML =
-"CLASSIFICATION ERROR";
-    }
+    }, 1200);
 }
 
 let currentAudio =
